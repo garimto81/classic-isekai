@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# Config files
+config.ini
+
+# Database
+*.db
+
+# IDE specific
+.vscode/
+.idea/
