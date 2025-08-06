@@ -34,20 +34,37 @@
 
 ## 4. 사용 방법
 
-- **작품 검색 및 추가:**
-  - Google Books에서 'Moby Dick'을 검색하여 데이터베이스에 추가합니다.
+- **1. 작품 검색 및 아카이브 추가:**
+  - Google Books에서 'Moby Dick'을 검색하여 데이터베이스에 '후보' 상태로 추가합니다.
   ```bash
   python main.py fetch --library google_books --query "Moby Dick"
   ```
 
-- **데이터베이스 검색 (구현 예정):**
+- **2. 아카이브 검색:**
+  - 데이터베이스에 저장된 작품들을 다양한 조건으로 검색합니다.
   ```bash
-  python main.py search --author "Herman Melville"
+  # 저자 이름으로 검색
+  python main.py search --author "Melville"
+
+  # 제목으로 검색
+  python main.py search --title "Moby Dick"
+
+  # 작업 상태로 검색
+  python main.py search --status "후보"
+  ```
+
+- **3. 작품 정보 업데이트:**
+  - 작품의 작업 상태나 아이디어 메모를 수정합니다.
+  ```bash
+  # ID가 1인 작품의 상태를 '검토중'으로 변경
+  python main.py update --id 1 --status "검토중"
+
+  # ID가 1인 작품에 메모 추가
+  python main.py update --id 1 --notes "주인공을 우주 비행사로 각색하는 아이디어"
   ```
 
 ## 5. 향후 계획
 
 -   다양한 라이브러리(Internet Archive, Project Gutenberg 등) 커넥터 추가
 -   작품 원문 다운로드 기능 구현
--   데이터베이스 검색 및 관리 기능 고도화
 -   간단한 웹 인터페이스 개발

@@ -80,6 +80,78 @@ def fetch_works(args):
     print(f"새롭게 추가된 작품: {new_works_count}개")
 
 
+def search_works(args):
+    """데이터베이스에서 작품을 검색하고 결과를 출력합니다."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+
+    query = "SELECT id, title, author, publication_year, status FROM works WHERE 1=1"
+    params = []
+
+    if args.title:
+        query += " AND title LIKE ?"
+        params.append(f"%{args.title}%")
+    if args.author:
+        query += " AND author LIKE ?"
+        params.append(f"%{args.author}%")
+    if args.status:
+        query += " AND status = ?"
+        params.append(args.status)
+
+    cursor.execute(query, params)
+    results = cursor.fetchall()
+    conn.close()
+
+    if not results:
+        print("검색 결과가 없습니다.")
+        return
+
+    # 결과 출력
+    print(f"\n--- 검색 결과 ({len(results)}개) ---")
+    for row in results:
+        print(f"ID: {row[0]}, 제목: {row[1]}, 저자: {row[2]}, 출판년도: {row[3]}, 상태: {row[4]}")
+    print("------------------------\n")
+
+
+def update_work(args):
+    """데이터베이스의 작품 정보를 수정합니다."""
+    if not args.status and not args.notes:
+        print("오류: --status 또는 --notes 중 하나는 반드시 제공되어야 합니다.")
+        return
+
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+
+    set_clauses = []
+    params = []
+
+    if args.status:
+        set_clauses.append("status = ?")
+        params.append(args.status)
+    if args.notes:
+        set_clauses.append("notes = ?")
+        params.append(args.notes)
+
+    params.append(args.id)
+
+    query = f"UPDATE works SET {', '.join(set_clauses)} WHERE id = ?"
+
+    cursor.execute(query, params)
+    
+    if cursor.rowcount == 0:
+        print(f"ID가 {args.id}인 작품을 찾을 수 없습니다.")
+    else:
+        print(f"ID {args.id}인 작품의 정보가 성공적으로 업데이트되었습니다.")
+        # 변경된 내용 확인
+        cursor.execute("SELECT id, title, status, notes FROM works WHERE id = ?", (args.id,))
+        updated_work = cursor.fetchone()
+        print(f"  -> ID: {updated_work[0]}, 제목: {updated_work[1]}, 상태: {updated_work[2]}, 메모: {updated_work[3]}")
+
+
+    conn.commit()
+    conn.close()
+
+
 def main():
     """메인 실행 함수"""
     parser = argparse.ArgumentParser(description="고전 명작 아카이브 시스템")
@@ -95,7 +167,21 @@ def main():
     parser_fetch.add_argument('--query', required=True, help='검색할 키워드')
     parser_fetch.set_defaults(func=fetch_works)
 
-    # TODO: search, download, update 명령어 추가 예정
+    # Search 명령어
+    parser_search = subparsers.add_parser('search', help='데이터베이스에서 작품을 검색합니다.')
+    parser_search.add_argument('--title', help='검색할 작품 제목')
+    parser_search.add_argument('--author', help='검색할 저자')
+    parser_search.add_argument('--status', help='검색할 작업 상태 (e.g., 후보, 검토중)')
+    parser_search.set_defaults(func=search_works)
+
+    # Update 명령어
+    parser_update = subparsers.add_parser('update', help='데이터베이스의 작품 정보를 수정합니다.')
+    parser_update.add_argument('--id', type=int, required=True, help='수정할 작품의 ID')
+    parser_update.add_argument('--status', help='새로운 작업 상태 (e.g., 검토중, 각색중)')
+    parser_update.add_argument('--notes', help='작품에 대한 아이디어 메모')
+    parser_update.set_defaults(func=update_work)
+
+    # TODO: download 명령어 추가 예정
 
     args = parser.parse_args()
     if hasattr(args, 'func'):
