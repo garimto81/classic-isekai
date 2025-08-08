@@ -25,10 +25,10 @@
 
 ## 3. 상세 설정 파일
 
-*   [세계의 구조 및 지리](geography.md)
-*   [종족](races.md)
-*   [직업](professions.md)
-*   [문파 및 세력](factions.md)
-*   [기술 및 현상 용어](energy_system.md)
-*   [해양 세계관 확장](marine_world.md)
-*   [갈등 및 스토리 아크 아이디어](conflicts.md)
+*   [세계의 구조 및 지리](02_geography.md)
+*   [종족](03_races.md)
+*   [직업](04_professions.md)
+*   [문파 및 세력](05_factions.md)
+*   [기술 및 현상 용어](01_energy_system.md)
+*   [해양 세계관 확장](06_marine_world.md)
+*   [갈등 및 스토리 아크 아이디어](07_conflicts.md)
