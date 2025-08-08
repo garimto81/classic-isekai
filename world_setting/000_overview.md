@@ -37,8 +37,8 @@
 
 ## 3. 상세 설정 파일
 
-*   [언어 체계](001_language_system.md)
 *   [주요 인물](005_characters.md)
+*   [언어 체계](010_language_system.md)
 *   [세계의 구조 및 지리](020_geography.md)
 *   [종족](030_races.md)
 *   [직업](040_professions.md)
