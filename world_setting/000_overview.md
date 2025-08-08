@@ -37,12 +37,12 @@
 
 ## 3. 상세 설정 파일
 
-*   [언어 체계](00_language_system.md)
-*   [주요 인물](00_characters.md)
-*   [세계의 구조 및 지리](02_geography.md)
-*   [종족](03_races.md)
-*   [직업](04_professions.md)
-*   [문파 및 세력](05_factions.md)
-*   [사회 구조](06_social_structure.md)
-*   [기술 및 현상 용어](01_energy_system.md)
-*   [갈등 및 스토리 아크 아이디어](07_conflicts.md)
+*   [언어 체계](001_language_system.md)
+*   [주요 인물](005_characters.md)
+*   [세계의 구조 및 지리](020_geography.md)
+*   [종족](030_races.md)
+*   [직업](040_professions.md)
+*   [문파 및 세력](050_factions.md)
+*   [사회 구조](060_social_structure.md)
+*   [기술 및 현상 용어](010_energy_system.md)
+*   [갈등 및 스토리 아크 아이디어](070_conflicts.md)
